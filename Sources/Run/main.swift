@@ -1,3 +1,7 @@
 import App
 
-try app(.detect()).run()
+do {
+    try app(.detect()).run()
+} catch {
+    print(error)
+}
