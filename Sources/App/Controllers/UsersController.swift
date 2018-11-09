@@ -32,6 +32,7 @@ final class UsersController {
             }
             let hash = try BCrypt.hash(user.password)
             return User(
+                id: nil,
                 username: user.username,
                 firstName: user.firstName,
                 lastName: user.lastName,
@@ -46,7 +47,10 @@ final class UsersController {
     }
     
     func setup(_ req: Request) throws -> Future<String> {
-        return User(id: nil, username: "test_1234", email: "test", passwordHash: "asd").save(on: req).map(to: String.self) { _ in
+        let user: User?
+        user = User(id: nil, username: "test_1234", firstName: nil, lastName: nil, email: "test", passwordHash: "asd")
+
+        return user!.save(on: req).map(to: String.self) { _ in
             return "aaa"
         }.catchMap { error in
             return "errr"
