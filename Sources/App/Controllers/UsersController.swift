@@ -47,10 +47,9 @@ final class UsersController {
     }
     
     func setup(_ req: Request) throws -> Future<String> {
-        let user: User?
-        user = User(id: nil, username: "test_1234", firstName: nil, lastName: nil, email: "test", passwordHash: "asd")
+        let user = User(id: nil, username: "test_1234", firstName: nil, lastName: nil, email: "test", passwordHash: "asd")
 
-        return user!.save(on: req).map(to: String.self) { _ in
+        return user.save(on: req).map(to: String.self) { _ in
             return "aaa"
         }.catchMap { error in
             return "errr"
