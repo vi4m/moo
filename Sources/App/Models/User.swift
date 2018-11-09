@@ -1,7 +1,7 @@
 import FluentPostgreSQL
 import Vapor
 
-final class User: PostgreSQLModel, Content, Parameter {
+internal final class User: PostgreSQLModel, Parameter {
     var id: Int?
     var username: String
     var firstName: String?

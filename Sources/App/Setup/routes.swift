@@ -5,15 +5,16 @@ struct PostgreSQLVersion: Codable {
 }
 
 /// Register your application's routes here.
-public func routes(_ router: Router) throws {
+public func routes(_ router: Router, _ container: Container) throws {
+    let userRepository = try container.make(UserRepository.self)
     // "It works" page
     router.get { req in
         return try req.view().render("welcome")
     }
     
-    let usersController = UsersController()
+    let usersController = UsersController(userRepository: userRepository)
     try router.register(collection: usersController)
-    
+
     router.get("ping") { req in
         return req.withPooledConnection(to: .psql) { conn in
             return conn.raw("SELECT version()")

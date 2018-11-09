@@ -3,17 +3,17 @@ import Vapor
 @testable import App
 
 class FunctionalTestCase: XCTestCase {
-    var a: Application!
+    var application: Application!
 
     override func setUp() {
         super.setUp()
-        self.a = try! Application.testable()
+        self.application = try! Application.testable()
     }
 
     override func tearDown() {
         super.tearDown()
-//        try! self.a!.withNewConnection(to: .psql) { conn in
-//            return conn.simpleQuery("DROP DATABASE kudosy_test").transform(to: ())
-//        }.wait()
+        try! self.application!.withNewConnection(to: .psql) { conn in
+            return conn.simpleQuery("TRUNCATE \"User\" CASCADE").transform(to: ())
+        }.wait()
     }
 }

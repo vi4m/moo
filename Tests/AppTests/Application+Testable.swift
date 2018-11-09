@@ -21,17 +21,5 @@ extension Application {
         try req.content.encode(body)
         let responder = try make(Responder.self)
         return try responder.respond(to: req).wait()
-
-//        var httpRequest = HTTPRequest(method: method, url: URL(string: path)!)
-//        httpRequest.headers.add(name: .contentType, value: contentType.serialize())
-//        let responder = try! self.make(Responder.self)
-//        let wrappedRequest = Request(http: httpRequest, using: self)
-//        return try! responder.respond(to: wrappedRequest).wait()
-//        var httpRequest = HTTPRequest(method: method, url: URL(string: path)!)
-//        httpRequest.headers.add(name: .contentType, value: contentType.serialize())
-//        return Request(http: httpRequest, using: self)
-
-//        let responder = try make(Responder.self)
-//        return try responder.respond(to: wrappedRequest).wait()
     }
 }
