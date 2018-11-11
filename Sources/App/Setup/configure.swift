@@ -16,6 +16,8 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     var databasesConfig = DatabasesConfig()
     try databases(config: &databasesConfig)
     services.register(databasesConfig)
+
+    setupRepositories(services: &services, config: &config)
     
     let poolConfig = DatabaseConnectionPoolConfig(maxConnections: 8)
     services.register(poolConfig)
@@ -26,9 +28,11 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     services.register(migrationConfig)
     
     /// Register routes to the router
-    let router = EngineRouter.default()
-    try routes(router)
-    services.register(router, as: Router.self)
+    services.register(Router.self) { container -> EngineRouter in
+        let router = EngineRouter.default()
+        try routes(router, container)
+        return router
+    }
     
     /// Use Leaf for rendering views
     config.prefer(LeafRenderer.self, for: ViewRenderer.self)
