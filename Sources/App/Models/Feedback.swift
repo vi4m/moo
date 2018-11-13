@@ -1,7 +1,7 @@
 import FluentPostgreSQL
 import Vapor
 
-struct Feedback: PostgreSQLModel, Content, Parameter, Equatable {
+struct Feedback: PostgreSQLModel {
     var id: Int?
     
     var recipientID: Int
@@ -18,3 +18,6 @@ struct Feedback: PostgreSQLModel, Content, Parameter, Equatable {
         }
     }
 }
+
+extension Feedback: Content { }
+extension Feedback: Parameter { }
