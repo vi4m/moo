@@ -12,7 +12,6 @@ extension Application {
         let app = try Application(config: config, environment: env, services: services)
         try App.boot(app)
         try app.asyncRun().wait()
-        
         return app
     }
     

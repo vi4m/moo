@@ -33,13 +33,13 @@ class AppTests: FunctionalTestCase {
             email: "test2",
             passwordHash: "123"
         )
-        _ = try sender.save(on: conn).wait()
+        let senderResult = try sender.save(on: conn).wait()
         let recipientResult = try recipient.save(on: conn).wait()
         
         let feedback = Feedback(
             id: nil,
             recipientID: recipientResult.id!,
-            senderID: recipientResult.id!,
+            senderID: senderResult.id!,
             message: "Thank you for helping me!"
         )
         let response = try self.application.client().post(
@@ -47,6 +47,9 @@ class AppTests: FunctionalTestCase {
         
         let savedFeedback = try! response.content.syncDecode(Feedback.self)
         XCTAssertEqual(savedFeedback.message, feedback.message)
+        XCTAssertEqual(savedFeedback.senderID, feedback.senderID)
+        XCTAssertEqual(savedFeedback.recipientID, feedback.recipientID)
+
     }
     
     static let allTests = [
