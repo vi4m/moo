@@ -1,7 +1,6 @@
 import FluentPostgreSQL
 import Vapor
 
-
 protocol UserRepository: ServiceType {
     func create(user: User) throws -> Future<User>
 }
@@ -15,7 +14,7 @@ final class PostgreSQLUserRepository: UserRepository {
 
     func create(user: User) -> EventLoopFuture<User> {
         return db.withConnection { conn in
-            return user.save(on: conn)
+            user.save(on: conn)
         }
     }
 }

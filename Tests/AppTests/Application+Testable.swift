@@ -1,6 +1,6 @@
 @testable import App
-import Vapor
 import Authentication
+import Vapor
 
 extension Application {
     static func testable() throws -> Application {
@@ -14,7 +14,7 @@ extension Application {
         try app.asyncRun().wait()
         return app
     }
-    
+
     func sendRequest<BodyRequest>(to path: String, method: HTTPMethod, contentType: MediaType = .json, body: BodyRequest) throws -> Response where BodyRequest: Content {
         var http = HTTPRequest(method: method, url: URL(string: path)!)
         http.headers.add(name: .contentType, value: contentType.serialize())

@@ -11,21 +11,20 @@ public func routes(_ router: Router, _ container: Container) throws {
     router.get { req in
         return try req.view().render("welcome")
     }
-    
+
     let usersController = UsersController(userRepository: userRepository)
-    
+
     let feedbacksController = FeedbacksController()
-    
+
     try router.register(collection: usersController)
     try router.register(collection: feedbacksController)
 
-
     router.get("ping") { req in
         return req.withPooledConnection(to: .psql) { conn in
-            return conn.raw("SELECT version()")
+            conn.raw("SELECT version()")
                 .all(decoding: PostgreSQLVersion.self)
-            }.map { rows in
-                return rows[0].version
+        }.map { rows in
+            rows[0].version
         }
     }
 }

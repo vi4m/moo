@@ -1,7 +1,6 @@
 import Crypto
 import Vapor
 
-
 struct UserCreateRequest: Content {
     var username: String
     var firstName: String?
@@ -23,12 +22,12 @@ final class UsersController {
     init(userRepository: UserRepository) {
         self.userRepository = userRepository
     }
-    
-    func signUp(_ req: Request, content: UserCreateRequest) throws -> Future<UserResponse> {
+
+    func signUp(_: Request, content: UserCreateRequest) throws -> Future<UserResponse> {
         guard content.password == content.verifyPassword else {
             throw Abort(.badRequest, reason: "Password mismatch")
         }
-            
+
         let hash = try BCrypt.hash(content.password)
         let user = User(
             id: nil,
@@ -38,12 +37,11 @@ final class UsersController {
             email: content.email,
             passwordHash: hash
         )
-        return try userRepository.create(user: user).map { user  in
-            return try UserResponse(id: user.id!, username: user.username, email: user.email)
+        return try userRepository.create(user: user).map { user in
+            try UserResponse(id: user.id!, username: user.username, email: user.email)
         }
     }
 }
-
 
 extension UsersController: RouteCollection {
     func boot(router: Router) throws {

@@ -2,10 +2,10 @@ import FluentPostgreSQL
 import Vapor
 
 struct User: PostgreSQLModel, Content, Parameter {
-    var id: Int? = nil
+    var id: Int?
     var username: String
-    var firstName: String? = nil
-    var lastName: String? = nil
+    var firstName: String?
+    var lastName: String?
     var email: String
     var passwordHash: String
 }
