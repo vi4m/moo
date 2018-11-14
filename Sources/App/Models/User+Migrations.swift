@@ -10,7 +10,7 @@ struct CreateUniqueUsernameAndEmail: PostgreSQLMigration {
             builder.deleteUnique(from: \.email)
         }
     }
-    
+
     static func prepare(on conn: PostgreSQLConnection) -> Future<Void> {
         return PostgreSQLDatabase.update(User.self, on: conn) { builder in
             builder.unique(on: \.username)

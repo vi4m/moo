@@ -2,7 +2,7 @@ import Crypto
 import Vapor
 
 final class FeedbacksController {
-    func create(_ req: Request, content: Feedback) throws -> Future<Feedback> {
+    func create(_ req: Request, content _: Feedback) throws -> Future<Feedback> {
         let feedback = try req.content.decode(Feedback.self).flatMap(to: Feedback.self) { feedback in
             return feedback.save(on: req)
         }

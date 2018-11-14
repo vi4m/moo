@@ -1,5 +1,5 @@
-import Vapor
 import FluentPostgreSQL
+import Vapor
 
 public func databases(config: inout DatabasesConfig) throws {
     guard let databaseUrl = Environment.get("DATABASE_URL") else {
