@@ -14,7 +14,11 @@ public func routes(_ router: Router, _ container: Container) throws {
     
     let usersController = UsersController(userRepository: userRepository)
     
+    let feedbacksController = FeedbacksController()
+    
     try router.register(collection: usersController)
+    try router.register(collection: feedbacksController)
+
 
     router.get("ping") { req in
         return req.withPooledConnection(to: .psql) { conn in

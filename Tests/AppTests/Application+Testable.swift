@@ -7,13 +7,15 @@ extension Application {
         var config = Config.default()
         var services = Services.default()
         var env = Environment.testing
+        env.commandInput.arguments = []
         try App.configure(&config, &env, &services)
         let app = try Application(config: config, environment: env, services: services)
         try App.boot(app)
-
+        try app.asyncRun().wait()
+        
         return app
     }
-
+    
     func sendRequest<BodyRequest>(to path: String, method: HTTPMethod, contentType: MediaType = .json, body: BodyRequest) throws -> Response where BodyRequest: Content {
         var http = HTTPRequest(method: method, url: URL(string: path)!)
         http.headers.add(name: .contentType, value: contentType.serialize())
