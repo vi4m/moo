@@ -1,0 +1,2 @@
+format: 
+	swiftformat --disable redundantSelf .
